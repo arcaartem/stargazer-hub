@@ -15,8 +15,7 @@ module.exports = {
     extensions: [ '.tsx', '.ts', '.js' ],
   },
   entry: {
-    app: './src/index.tsx',
-    print: './src/print.ts',
+    gui: './src/index.tsx',
   },
   plugins: [
     new CleanWebpackPlugin({
@@ -43,4 +42,5 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  target: 'electron-renderer'
 };
