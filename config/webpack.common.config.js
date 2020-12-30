@@ -5,17 +5,8 @@ const path = require('path');
 const mode = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  devtool: (mode === 'development') ? 'inline-source-map' : false,
-  devServer: {
-    contentBase: './dist',
-    writeToDisk: true,
-  },
-  mode: mode,
   resolve: {
     extensions: [ '.tsx', '.ts', '.js' ],
-  },
-  entry: {
-    main: './src/main.ts',
   },
   plugins: [
     new CleanWebpackPlugin({
@@ -33,6 +24,10 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.css$/,
+        use: 'css-loader'
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
@@ -40,7 +35,6 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
   },
-  target: 'electron-main'
 };

@@ -1,12 +1,13 @@
 import React from 'react';
-import PrintMe from './print';
+import './App.css';
+import AdvancedTable from './AdvancedTable';
 
-export default function App() {
+function App() {
   return (
-    <div>
-      <h1>Hello, world!</h1>
-      <h2>Bib</h2>
-      <button onClick={PrintMe}>Click me!</button>
+    <div className="App">
+      <AdvancedTable></AdvancedTable>
     </div>
   );
 }
+
+export default App;
