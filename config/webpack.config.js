@@ -12,6 +12,7 @@ const developmentConfig = {
   devServer: {
     contentBase: './dist',
     writeToDisk: true,
+    historyApiFallback: true,
   },
   mode: mode,
 };
