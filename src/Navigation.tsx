@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { 
   Pane,
   TabNavigation,
@@ -7,36 +7,37 @@ import {
 } from 'evergreen-ui';
 
 export default function Navigation() {
-  const history = useHistory();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedTab, setSelectedTab] = useState('home');
 
-  function handleHome() {
-    setSelectedIndex(0);
-    history.push('/');
-  }
+  const routes = [
+    { key: 'home', to: '/', text: 'Home' },
+    { key: 'stars', to: '/stars', text: 'Stars' },
+    { key: 'advanced-table', to: '/advanced-table', text: 'Advanced Table' },
+    { key: 'somewhere', to: '/somewhere', text: 'Somewhere new' },
 
-  function handleAdvancedTable() {
-    setSelectedIndex(1);
-    history.push('/advanced-table');
-  }
+  ];
 
-  function handleStars() {
-    setSelectedIndex(2);
-    history.push('/stars');
-  }
+  const navLinks = routes.map(route => {
+    return (
+        <NavLink to={route.to} isActive={(match, _location) => {
+          if (match) {
+            setSelectedTab(route.key);
+            return true;
+          }
+
+          return false;
+        }}>
+          <Tab key={route.key} id={route.key} isSelected={selectedTab === route.key}>
+            {route.text}
+          </Tab>
+        </NavLink>
+    );
+  });
 
   return (
     <Pane background="blueTint" borderRadius={4}>
       <TabNavigation>
-        <Tab key="Home" id="Home" isSelected={selectedIndex==0} onSelect={handleHome}>
-          Home
-        </Tab>
-        <Tab key="AdvancedTable" id="AdvancedTable" isSelected={selectedIndex==1} onSelect={handleAdvancedTable}>
-          Advanced Table
-        </Tab>
-        <Tab key="Stars" id="Stars" isSelected={selectedIndex==2} onSelect={handleStars}>
-          Stars
-        </Tab>
+        {navLinks}
       </TabNavigation>
     </Pane>
   );

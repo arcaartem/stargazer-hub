@@ -14,7 +14,7 @@ import {
   MoreIcon,
   TextDropdownButton
 } from 'evergreen-ui'
-import profilesRaw from './profiles.json'
+import profilesRaw from './../profiles.json'
 
 type Profile = {
   lastActivity: string;

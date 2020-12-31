@@ -13,7 +13,8 @@ module.exports = {
       cleanStaleWebpackAssets: false,
     }),
     new HtmlWebpackPlugin({
-      title: 'Stargazer Hub'
+      title: 'Stargazer Hub',
+      template: './src/index-template.ejs'
     }),
   ],
   module: {
