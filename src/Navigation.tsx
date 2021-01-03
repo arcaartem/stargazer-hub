@@ -12,8 +12,6 @@ export default function Navigation() {
   const routes = [
     { key: 'home', path: '/', text: 'Home' },
     { key: 'stars', path: '/stars', text: 'Stars' },
-    { key: 'advanced-table', path: '/advanced-table', text: 'Advanced Table' },
-    { key: 'somewhere', path: '/somewhere', text: 'Somewhere new' },
 
   ];
 
