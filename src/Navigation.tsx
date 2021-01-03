@@ -1,32 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import routes from './routeDefinitions';
+
 import { 
   Card,
   TabNavigation,
   Tab
 } from 'evergreen-ui';
 
+type RouteType = { route: keyof typeof routes };
+
 export default function Navigation() {
   const [selectedTab, setSelectedTab] = useState('home');
 
-  const routes = [
-    { key: 'home', path: '/', text: 'Home' },
-    { key: 'stars', path: '/stars', text: 'Stars' },
-
-  ];
-
-  const navLinks = routes.map(route => {
+  const NavLink = ({ route }: RouteType) => {
+    const { path, text } = routes[route];
     return (
-      <Tab key={route.key} id={route.key} isSelected={selectedTab === route.key} onSelect={() => setSelectedTab(route.key)}>
-        <Link to={route.path}>{route.text}</Link>
+      <Tab
+        key={route}
+        id={route}
+        isSelected={selectedTab === route}
+        onSelect={() => setSelectedTab(route)}
+      >
+        <Link to={ path }>{ text }</Link>
       </Tab>
     );
-  });
+  }
 
   return (
     <Card background="blueTint">
       <TabNavigation>
-        {navLinks}
+        <NavLink route='home' />
+        <NavLink route='stars' />
       </TabNavigation>
     </Card>
   );

@@ -15,6 +15,9 @@ import {
   TextDropdownButton,
 } from 'evergreen-ui';
 
+import GitHubProject from '../domain/GitHubProject';
+import StateHook from '../domain/StateHook';
+
 enum Order {
   NONE = 'NONE',
   ASC = 'ASC',
@@ -75,27 +78,9 @@ type RepoListProps = {
   projects: Array<GitHubProject>;
 };
 
-export type StateHook<T> = [T, (value: T) => void];
-
 type OrderState = {
   orderedColumn: number;
   ordering: Order;
-}
-
-type GitHubProject = {
-  id: number;
-  name: string;
-  description: string;
-  language: string;
-  full_name: string;
-  stargazers_count: number;
-  watchers_count: number;
-  open_issues_count: number;
-  forks_count: number;
-  size: number;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
 }
 
 type MenuOption = {
@@ -136,7 +121,7 @@ export default function RepoList(props: RepoListProps) {
     });
   }
 
-function HeaderMenu({ columnNumber, close }: {columnNumber: number, close: Function}) {
+function HeaderMenu({ columnNumber, close }: {columnNumber: number, close: any}) {
     return (
       <Menu>
         <Menu.OptionsGroup
@@ -232,8 +217,8 @@ function HeaderCell({ header, columnNumber, menu }: { header: string, columnNumb
       <Table border>
         <Table.Head>
           <Table.SearchHeaderCell onChange={setSearchQuery} value={searchQuery} />
-          <HeaderCell header="Description" columnNumber={1} menu={(close: Function) => <HeaderMenu columnNumber={1} close={close}/>} />
-          <HeaderCell header="Language" columnNumber={2} menu={(close: Function) => <HeaderMenu columnNumber={2} close={close}/>} />
+          <HeaderCell header="Description" columnNumber={1} menu={(close: any) => <HeaderMenu columnNumber={1} close={close}/>} />
+          <HeaderCell header="Language" columnNumber={2} menu={(close:any) => <HeaderMenu columnNumber={2} close={close}/>} />
           <HeaderCell header={ label } columnNumber={3} menu={ ValueHeaderMenu } />
         </Table.Head>
         <Table.VirtualBody height={640}>

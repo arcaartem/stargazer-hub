@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import fetch from 'node-fetch';
+import fetchRepos from '../fetchRepos';
 import {
   Spinner,
   CloudDownloadIcon,
@@ -9,35 +9,35 @@ import {
   Pre
 } from 'evergreen-ui';
 
-import RepoList, { StateHook } from '../components/RepoList';
+import RepoList from '../components/RepoList';
+import StateHook from '../domain/StateHook';
+import GitHubProject from '../domain/GitHubProject';
 
 import {
   Button
 } from 'evergreen-ui';
 
+const STARRED_REPOS_URL = 'https://api.github.com/user/starred';
+const KEY_API_TOKEN = 'apiToken';
+
 export default function Stars() {
-  const [repos, setRepos] = useState([]);
+  const [repos, setRepos] = useState([] as Array<GitHubProject>);
   const [loading, setLoading] = useState(false);
-  const savedApiToken = localStorage.getItem('apiToken') || '';
+  const savedApiToken = localStorage.getItem(KEY_API_TOKEN) || '';
   const [apiToken, setApiToken] : StateHook<string> = useState(savedApiToken);
 
   function handleClick() {
     setLoading(true);
-    fetch('https://api.github.com/user/starred', {
-      headers: {
-        'Authorization': `token ${apiToken}`
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        setRepos(json);
-        setLoading(false);
-      });
+    fetchRepos(STARRED_REPOS_URL, apiToken)
+    .then(repositories => {
+      setRepos(repositories);
+      setLoading(false);
+    });
   }
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setApiToken(e.target.value);
-    localStorage.setItem('apiToken', e.target.value);
+    localStorage.setItem(KEY_API_TOKEN, e.target.value);
   }
 
   return (
