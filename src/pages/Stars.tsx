@@ -5,8 +5,7 @@ import {
   CloudDownloadIcon,
   TextInputField,
   Pane,
-  Text,
-  Pre
+  Pre, Dialog
 } from 'evergreen-ui';
 
 import RepoList from '../components/RepoList';
@@ -17,7 +16,6 @@ import {
   Button
 } from 'evergreen-ui';
 
-const STARRED_REPOS_URL = 'https://api.github.com/user/starred';
 const KEY_API_TOKEN = 'apiToken';
 
 export default function Stars() {
@@ -25,38 +23,58 @@ export default function Stars() {
   const [loading, setLoading] = useState(false);
   const savedApiToken = localStorage.getItem(KEY_API_TOKEN) || '';
   const [apiToken, setApiToken] : StateHook<string> = useState(savedApiToken);
+  const [hasError, setHasError] = useState(false);
 
   function handleClick() {
+    setHasError(false);
     setLoading(true);
-    fetchRepos(STARRED_REPOS_URL, apiToken)
-    .then(repositories => {
-      setRepos(repositories);
-      setLoading(false);
-    });
+    localStorage.setItem(KEY_API_TOKEN, apiToken);
+    fetchRepos(apiToken)
+      .then(repositories => {
+        setRepos(repositories);
+      })
+      .catch(() => {
+        setHasError(true);
+      })
+      .finally(() => setLoading(false));
   }
 
-  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setApiToken(e.target.value);
-    localStorage.setItem(KEY_API_TOKEN, e.target.value);
+  function ErrorMessage() {
+    return (
+      <Pane>
+        <Dialog isShown={hasError}
+                title="Error"
+                intent="danger"
+                hasCancel={false}
+                confirmLabel="Close"
+                onConfirm={() => setHasError(false)}
+                >
+          An error has occurred while fetching starred repositories. Please try again later.
+        </Dialog>
+      </Pane>
+    )
   }
 
   return (
     <>
-      <Pane display="column" padding={10} alignItems="center">
+      <Pane display="flex" padding={10} alignItems="center">
         <TextInputField
+          width="50%"
           name="text-input-token"
           label="GitHub Personal Token"
-          onChange={handleOnChange}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setApiToken(e.target.value)}
           value={apiToken}
         />
         <Button
+          marginLeft="1em"
           iconBefore={CloudDownloadIcon}
           onClick={handleClick}
         >
           <Pre>Get Starred Repos</Pre>
         </Button>
       </Pane>
-      { loading ? <Spinner /> : <RepoList projects={repos}/> }
+      { hasError && <ErrorMessage /> }
+      { !hasError && loading ? <Spinner /> : <RepoList projects={repos}/> }
     </>
   );
 }
