@@ -9,10 +9,10 @@
     "start": "webpack serve --config ./config/webpack.config.js --open",
     "build": "webpack --config ./config/webpack.config.js",
     "electron-build": "webpack --config ./config/webpack.electron.config.js",
-    "electron-start": "electron ./dist/index.html",
+    "electron-start": "npm run electron-build && electron ./dist/index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "pack": "npm run electron-build && electron-builder --dir",
+    "dist": "npm run electron-build && electron-builder"
   },
   "author": "Arca Artem",
   "license": "MIT",
