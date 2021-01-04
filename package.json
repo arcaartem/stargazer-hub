@@ -44,14 +44,14 @@
     "react-router-dom": "^5.2.0"
   },
   "build": {
-    "appId": "your.id",
+    "appId": "stargazer-hub",
     "files": [
       "dist/**/*",
       "node_modules/**/*",
       "package.json"
     ],
     "mac": {
-      "category": "your.app.category.type"
+      "category": "public.app-category.utilities"
     },
     "directories": {
       "output": "electron-dist"
