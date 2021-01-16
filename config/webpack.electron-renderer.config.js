@@ -1,9 +1,15 @@
 const { merge } = require('webpack-merge');
 const commonConfig = require('./webpack.common.config');
+const path = require('path');
 
 const electronRendererConfig = {
   entry: {
-    gui: './src/index.tsx',
+    renderer: './src/renderer.tsx'
+  },
+  output: {
+    filename: 'js/[name].bundle.js',
+    sourceMapFilename: "js/[name].js.map",
+    path: path.resolve(__dirname, '../dist'),
   },
   target: 'electron-renderer'
 }
