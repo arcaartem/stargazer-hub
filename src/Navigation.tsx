@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import routes from './routeDefinitions';
 
 import { 
@@ -13,11 +13,11 @@ type RouteType = { route: keyof typeof routes };
 
 export default function Navigation() {
   const [selectedTab, setSelectedTab] = useState('home');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleOnSelect(route: any, path: string) {
     setSelectedTab(route);
-    history.push(path);
+    navigate(path);
   }
   const NavLink = ({ route }: RouteType) => {
     const { path, text } = routes[route];

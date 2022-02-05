@@ -10,9 +10,13 @@ const developmentConfig = {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist',
-    writeToDisk: true,
-    historyApiFallback: true,
+    devMiddleware: {
+      writeToDisk: true
+    },
+    static: {
+      directory: './dist'
+    },
+    historyApiFallback: true
   },
   mode: mode,
 };
