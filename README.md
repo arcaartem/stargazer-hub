@@ -1,6 +1,6 @@
 # Stargazer Hub
 
-A sample [Electron](https://electronjs.org/) app using React and TypeScript.
+A sample [Electron](https://electronjs.org/) app using Svelte and TypeScript.
 
 No warranties of any kind are provided.
 
@@ -22,8 +22,3 @@ npm run electron-start
 # package
 npm run pack
 ```
-## TODO
-* Pagination
-* Column selection
-* Filtering
-* Deletions
